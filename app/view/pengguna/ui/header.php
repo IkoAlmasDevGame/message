@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <?php
     session_start();
     # Database
     require_once("../../../database/koneksi.php");
@@ -25,16 +25,17 @@
                 $pesan->message();
                 break;
 
+                # bug penghapus pesan
             case 'hapus':
-                if (isset($_GET['hps'])) {
-                    if (isset($_GET['id'])) {
-                        $from = htmlspecialchars($_GET['id']);
+                if (isset($_GET['hpus'])) {
+                    if (isset($_GET['datetime'])) {
+                        $timedate = htmlspecialchars($_GET['datetime']);
                         $table = "tb_message";
-                        $select = $koneksi->query("SELECT * FROM $table WHERE id_chat = '$from'");
+                        $select = $koneksi->query("SELECT * FROM $table WHERE timestamp = '$timedate'");
                         $array = mysqli_fetch_array($select);
 
                         if ($array["FileUpload"] == "") {
-                            $delete = "DELETE FROM $table WHERE id_chat = '$array[id_chat]'";
+                            $delete = "DELETE FROM $table WHERE timestamp = '$array[timestamp]'";
                             $data = $koneksi->query($delete);
                             if ($data != "") {
                                 if ($data) {
@@ -47,7 +48,7 @@
                             }
                         } else {
                             unlink("../../../../assets/upload/$array[FileUpload]");
-                            $data = $koneksi->query("DELETE FROM $table WHERE id_chat = '$array[id_chat]'");
+                            $data = $koneksi->query("DELETE FROM $table WHERE timestamp = '$array[timestamp]'");
                             if ($data != "") {
                                 if ($data) {
                                     header("location:../ui/header.php?page=message");
@@ -63,15 +64,15 @@
                 break;
 
             case 'hapus2':
-                if (isset($_GET['hpss'])) {
-                    if (isset($_GET['id'])) {
-                        $from = htmlspecialchars($_GET['id']);
+                if (isset($_GET['hps'])) {
+                    if (isset($_GET['datetime'])) {
+                        $timedate = htmlspecialchars($_GET['datetime']);
                         $table = "tb_message";
-                        $select = $koneksi->query("SELECT * FROM $table WHERE id_chat = '$from'");
+                        $select = $koneksi->query("SELECT * FROM $table WHERE timestamp = '$timedate'");
                         $array = mysqli_fetch_array($select);
 
                         if ($array["FileUpload"] == "") {
-                            $delete = "DELETE FROM $table WHERE id_chat = '$array[id_chat]'";
+                            $delete = "DELETE FROM $table WHERE timestamp = '$array[timestamp]'";
                             $data = $koneksi->query($delete);
                             if ($data != "") {
                                 if ($data) {
@@ -84,7 +85,7 @@
                             }
                         } else {
                             unlink("../../../../assets/upload/$array[FileUpload]");
-                            $data = $koneksi->query("DELETE FROM $table WHERE id_chat = '$array[id_chat]'");
+                            $data = $koneksi->query("DELETE FROM $table WHERE timestamp = '$array[timestamp]'");
                             if ($data != "") {
                                 if ($data) {
                                     header("location:../ui/header.php?page=message");
@@ -122,6 +123,9 @@
                 break;
             case 'edit-pesan':
                 require_once("../message/edit.php");
+                break;
+            case 'arsip-pesan':
+                require_once("../message/arsip.php");
                 break;
             case 'logout':
                 if (isset($_SESSION['status'])) {
@@ -165,21 +169,21 @@
         exit;
     }
     ?>
-    <title>Dashboard Message</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
-    <!--  -->
-    <link href="<?= baseurl('dist/vendor/bootstrap-icons/bootstrap-icons.css') ?>" crossorigin="anonymous"
-        rel="stylesheet">
-    <link href="<?= baseurl('dist/vendor/boxicons/css/boxicons.min.css') ?>" crossorigin="anonymous"
-        rel="stylesheet">
-    <link href="<?= baseurl('dist/vendor/quill/quill.snow.css') ?>" crossorigin="anonymous" rel="stylesheet">
-    <link href="<?= baseurl('dist/vendor/quill/quill.bubble.css') ?>" crossorigin="anonymous" rel="stylesheet">
-    <link href="<?= baseurl('dist/vendor/remixicon/remixicon.css') ?>" crossorigin="anonymous" rel="stylesheet">
-    <link href="<?= baseurl('dist/vendor/simple-datatables/style.css') ?>" crossorigin="anonymous" rel="stylesheet">
-    <link href="<?= baseurl('dist/css/style.css') ?>" crossorigin="anonymous" rel="stylesheet">
-</head>
+        <title>Dashboard Message</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.dataTables.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+        <!--  -->
+        <link href="<?= baseurl('dist/vendor/bootstrap-icons/bootstrap-icons.css') ?>" crossorigin="anonymous"
+            rel="stylesheet">
+        <link href="<?= baseurl('dist/vendor/boxicons/css/boxicons.min.css') ?>" crossorigin="anonymous"
+            rel="stylesheet">
+        <link href="<?= baseurl('dist/vendor/quill/quill.snow.css') ?>" crossorigin="anonymous" rel="stylesheet">
+        <link href="<?= baseurl('dist/vendor/quill/quill.bubble.css') ?>" crossorigin="anonymous" rel="stylesheet">
+        <link href="<?= baseurl('dist/vendor/remixicon/remixicon.css') ?>" crossorigin="anonymous" rel="stylesheet">
+        <link href="<?= baseurl('dist/vendor/simple-datatables/style.css') ?>" crossorigin="anonymous" rel="stylesheet">
+        <link href="<?= baseurl('dist/css/style.css') ?>" crossorigin="anonymous" rel="stylesheet">
+    </head>
 
-<body>
+    <body>

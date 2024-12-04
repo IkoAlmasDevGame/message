@@ -27,7 +27,7 @@
                                 class="text-decoration-none text-primary">Beranda</a>
                         </li>
                         <li class="breadcrumb breadcrumb-item">
-                            <a href="?page=message&email=<?= $_SESSION['email'] ?>" aria-current="page"
+                            <a href="?page=message" aria-current="page"
                                 class="text-decoration-none text-primary">Dashboard Pesan</a>
                         </li>
                     </div>
@@ -38,13 +38,22 @@
                             <h4 class="card-title fst-normal fw-normal fs-4 text-dark">Data Message</h4>
                             <div class="text-start">
                                 <a href="?page=message" class="btn btn-warning">
-                                    <i class="fa fa-refresh"></i>
+                                    <i class="fa fa-refresh fa-1x"></i>
                                     <span>refresh halaman</span>
                                 </a>
                                 <a href="?page=message&keluar=yes" class="btn btn-danger">
                                     <i class="fa fa-envelope-open"></i>
                                     <span>Pesan Keluar</span>
                                 </a>
+                                <a href="" class="btn btn-info">
+                                    <i class="fa fa-archive fa-1x"></i>
+                                    <span>Arsip Pesan</span>
+                                </a>
+                                <!-- <a href="?page=arsip-pesan" class="btn btn-info">
+                                    <i class="fa fa-archive fa-1x"></i>
+                                    <span>Arsip Pesan</span>
+                                </a> -->
+
                             </div>
                             <br>
                             <div class="text-start">
@@ -62,16 +71,24 @@
                                         <?php error_reporting(0); ?>
                                         <?php if (!empty($_GET['keluar'] == "yes")): ?>
                                         <table class="table table-striped-columns" id="datatable2"
-                                            style="width: 900px; min-width: 100%;">
+                                            style="width: 1100px; min-width: 100%;">
                                             <thead class="table-head-fixed">
                                                 <tr>
-                                                    <th class="text-center fw-normal">No</th>
-                                                    <th class="text-center fw-normal">Email dari</th>
-                                                    <th class="text-center fw-normal">Email kepada</th>
-                                                    <th class="text-center fw-normal">Subject</th>
+                                                    <th class="text-center fw-normal">Timestamp</th>
+                                                    <th class="text-center fw-normal"
+                                                        style="width: 100px; max-width:100%;">No</th>
+                                                    <th class="text-center fw-normal"
+                                                        style="width: 200px; max-width:100%;">Email dari</th>
+                                                    <th class="text-center fw-normal"
+                                                        style="width: 200px; max-width:100%;">Email kepada</th>
+                                                    <th class="text-center fw-normal"
+                                                        style="width: 200px; max-width:100%;">Subject</th>
                                                     <th class="text-center fw-normal"
                                                         style="width: 200px; max-width:100%;">Pesan</th>
-                                                    <th class="text-center fw-normal">File Upload</th>
+                                                    <th class="text-center fw-normal"
+                                                        style="width: 250px; max-width:100%;">File Upload</th>
+                                                    <th class="text-center fw-normal"
+                                                        style="width: 250px; max-width:100%;">Date Timestamp</th>
                                                     <th class="text-center fw-normal"
                                                         style="width: 100px; max-width:100%;">Aksi</th>
                                                 </tr>
@@ -85,6 +102,14 @@
                                                     while ($pesan = $query->fetch_array()) {
                                                 ?>
                                                 <tr>
+                                                    <td class="text-center">
+                                                        <a href=""
+                                                            onclick="return confirm('Apakah anda ingin menghapus pesan ini ?')"
+                                                            aria-current="page" class="btn btn-danger">
+                                                            <i class="fa fa-trash-alt fa-1x"></i>
+                                                            <span title="Hapus Pesan"></span>
+                                                        </a>
+                                                    </td>
                                                     <td class="text-center"><?php echo $no++; ?></td>
                                                     <td class="text-center"><?php echo $pesan['toFrom'] ?></td>
                                                     <td class="text-center"><?php echo $pesan['toTo'] ?></td>
@@ -107,6 +132,7 @@
                                                         <p>Tidak ada File</p>
                                                     </td>
                                                     <?php endif ?>
+                                                    <td class="text-center"><?php echo $pesan['timestamp'] ?></td>
                                                     <td class="text-center">
                                                         <a href="?page=edit-pesan&id=<?= $pesan['id_chat'] ?>"
                                                             title="edit pesan" aria-current="page"
@@ -114,12 +140,10 @@
                                                             <i class="fa fa-edit"></i>
                                                             <span title="edit pesan"></span>
                                                         </a>
-                                                        <a href="?aksi=hapus2&hpss=yes&id=<?= $isi['id_chat'] ?>"
-                                                            onclick="javascript:return confirm('Apakah kamu ingin menghapus pesan ini ?')"
-                                                            title="Hapus pesan" aria-current="page"
+                                                        <a href="" title="arsip pesan" aria-current="page"
                                                             class="btn btn-danger">
-                                                            <i class="fa fa-trash"></i>
-                                                            <span title="Hapus pesan"></span>
+                                                            <i class="fa fa-mailchimp"></i>
+                                                            <span title="arsip"></span>
                                                         </a>
                                                     </td>
                                                 </tr>
@@ -131,15 +155,22 @@
                                         </table>
                                         <?php else: ?>
                                         <table class="table table-striped-columns" id="datatable2"
-                                            style="width: 900px; min-width: 100%;">
+                                            style="width: 1100px; min-width: 100%;">
                                             <thead class="table-head-fixed">
                                                 <tr>
-                                                    <th class="text-center fw-normal">No</th>
-                                                    <th class="text-center fw-normal">Email kepada</th>
-                                                    <th class="text-center fw-normal">Subject</th>
+                                                    <th class="text-center fw-normal">Timestamp</th>
+                                                    <th class="text-center fw-normal"
+                                                        style="width: 100px; max-width:100%;">No</th>
+                                                    <th class="text-center fw-normal"
+                                                        style="width: 200px; max-width:100%;">Email kepada</th>
+                                                    <th class="text-center fw-normal"
+                                                        style="width: 200px; max-width:100%;">Subject</th>
                                                     <th class="text-center fw-normal"
                                                         style="width: 200px; max-width:100%;">Pesan</th>
-                                                    <th class="text-center fw-normal">File Upload</th>
+                                                    <th class="text-center fw-normal"
+                                                        style="width: 250px; max-width:100%;">File Upload</th>
+                                                    <th class="text-center fw-normal"
+                                                        style="width: 250px; max-width:100%;">Date Timestamp</th>
                                                     <th class="text-center fw-normal"
                                                         style="width: 100px; max-width:100%;">Aksi</th>
                                                 </tr>
@@ -153,6 +184,14 @@
                                                     while ($isi = $query->fetch_array()) {
                                                 ?>
                                                 <tr>
+                                                    <td class="text-center">
+                                                        <a href=""
+                                                            onclick="return confirm('Apakah anda ingin menghapus pesan ini ?')"
+                                                            aria-current="page" class="btn btn-danger">
+                                                            <i class="fa fa-trash-alt fa-1x"></i>
+                                                            <span title="Hapus Pesan"></span>
+                                                        </a>
+                                                    </td>
                                                     <td class="text-center"><?php echo $no++; ?></td>
                                                     <td class="text-center"><?php echo $isi['toFrom'] ?></td>
                                                     <td class="text-center"><?php echo $isi['toSubject'] ?></td>
@@ -174,6 +213,7 @@
                                                         <p>Tidak ada File</p>
                                                     </td>
                                                     <?php endif ?>
+                                                    <td class="text-center"><?php echo $isi['timestamp'] ?></td>
                                                     <td class="text-center">
                                                         <a href="?page=balas-pesan&id=<?= $isi['id_chat'] ?>"
                                                             title="Balas pesan" aria-current="page"
@@ -181,12 +221,10 @@
                                                             <i class="fa fa-paper-plane"></i>
                                                             <span title="Balas pesan"></span>
                                                         </a>
-                                                        <a href="?aksi=message&email=<?= $_SESSION['email'] ?>"
-                                                            onclick="javascript:return confirm('Apakah kamu ingin menghapus pesan ini ?')"
-                                                            title="Hapus pesan" aria-current="page"
+                                                        <a href="" title="arsip pesan" aria-current="page"
                                                             class="btn btn-danger">
-                                                            <i class="fa fa-trash"></i>
-                                                            <span title="Hapus pesan"></span>
+                                                            <i class="fab fa-mailchimp"></i>
+                                                            <span title="arsip"></span>
                                                         </a>
                                                     </td>
                                                 </tr>

@@ -19,6 +19,7 @@ class message
             $to = htmlspecialchars($_POST['toTo']);
             $subject = htmlspecialchars($_POST['toSubject']);
             $message = htmlspecialchars($_POST['toMessage']);
+            $timestamp = date('Y-m-d H:i:s');
 
             /*/ Input File Foto /*/
             # Input File Foto
@@ -37,7 +38,7 @@ class message
                     exit;
                 }
             } else {
-                $this->db->query("INSERT INTO tb_message SET toFrom='$from', toTo='$to', toSubject='$subject', toMessage='$message'");
+                $this->db->query("INSERT INTO tb_message SET toFrom='$from', toTo='$to', toSubject='$subject', toMessage='$message', timestamp='$timestamp'");
                 echo "<script>document.location.href = '../ui/header.php?page=message';</script>";
                 die;
             }
@@ -50,7 +51,7 @@ class message
             }
 
             $table = "tb_message";
-            $SQLbalas = "INSERT INTO tb_message SET toFrom='$from', toTo='$to', toSubject='$subject', toMessage='$message', FileUpload='$file'";
+            $SQLbalas = "INSERT INTO tb_message SET toFrom='$from', toTo='$to', toSubject='$subject', toMessage='$message', FileUpload='$file', timestamp='$timestamp'";
             $balas = $this->db->query($SQLbalas);
             if ($balas != "") {
                 if ($balas) {
@@ -66,6 +67,7 @@ class message
             $to = htmlspecialchars($_POST['toTo']);
             $subject = htmlspecialchars($_POST['toSubject']);
             $message = htmlspecialchars($_POST['toMessage']);
+            $timestamp = date('Y-m-d H:i:s');
 
             /*/ Input File Foto /*/
             # Input File Foto
@@ -84,7 +86,7 @@ class message
                     exit;
                 }
             } else {
-                $this->db->query("INSERT INTO tb_message SET toFrom='$from', toTo='$to', toSubject='$subject', toMessage='$message'");
+                $this->db->query("INSERT INTO tb_message SET toFrom='$from', toTo='$to', toSubject='$subject', toMessage='$message', timestamp='$timestamp'");
                 echo "<script>document.location.href = '../ui/header.php?page=message';</script>";
                 die;
             }
@@ -97,7 +99,7 @@ class message
             }
 
             $table = "tb_message";
-            $SQLKirim = "INSERT INTO $table SET toFrom='$from', toTo='$to', toSubject='$subject', toMessage='$message', FileUpload='$file'";
+            $SQLKirim = "INSERT INTO $table SET toFrom='$from', toTo='$to', toSubject='$subject', toMessage='$message', FileUpload='$file', timestamp='$timestamp'";
             $kirim = $this->db->query($SQLKirim);
             if ($kirim != "") {
                 if ($kirim) {

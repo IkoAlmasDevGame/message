@@ -20,4 +20,6 @@ Fitur - Fitur :
     <li>Fitur sudah ada FileUpload</li>
     <li>Fitur Hapus caht dan sudah termasuk hapus FileUpload yang sudah terkirim</li>
     <li>Sudah ada Fitur Download</li>
+    <li>Arsip Comming hanya File Halaman saja ter-update</li>
+    <li>Beta Tester Update version 1.1 [Hapus menggunakan date time]</li>
 </ol>

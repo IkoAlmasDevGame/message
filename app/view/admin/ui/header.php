@@ -25,16 +25,17 @@
                 $pesan->message();
                 break;
 
+                # bug penghapus pesan
             case 'hapus':
                 if (isset($_GET['hps'])) {
-                    if (isset($_GET['id'])) {
-                        $from = htmlspecialchars($_GET['id']);
+                    if (isset($_GET['from'])) {
+                        $fromEmail = htmlspecialchars($_GET['from']);
                         $table = "tb_message";
-                        $select = $koneksi->query("SELECT * FROM $table WHERE id_chat = '$from'");
+                        $select = $koneksi->query("SELECT * FROM $table WHERE toFrom = '$from'");
                         $array = mysqli_fetch_array($select);
 
                         if ($array["FileUpload"] == "") {
-                            $delete = "DELETE FROM $table WHERE id_chat = '$array[id_chat]'";
+                            $delete = "DELETE FROM $table WHERE toFrom = '$array[toFrom]'";
                             $data = $koneksi->query($delete);
                             if ($data != "") {
                                 if ($data) {
@@ -47,7 +48,7 @@
                             }
                         } else {
                             unlink("../../../../assets/upload/$array[FileUpload]");
-                            $data = $koneksi->query("DELETE FROM $table WHERE id_chat = '$array[id_chat]'");
+                            $data = $koneksi->query("DELETE FROM $table WHERE toFrom = '$array[toFrom]'");
                             if ($data != "") {
                                 if ($data) {
                                     header("location:../ui/header.php?page=message");
@@ -64,14 +65,14 @@
 
             case 'hapus2':
                 if (isset($_GET['hpss'])) {
-                    if (isset($_GET['id'])) {
-                        $from = htmlspecialchars($_GET['id']);
+                    if (isset($_GET['to'])) {
+                        $toEmail = htmlspecialchars($_GET['to']);
                         $table = "tb_message";
-                        $select = $koneksi->query("SELECT * FROM $table WHERE id_chat = '$from'");
+                        $select = $koneksi->query("SELECT * FROM $table WHERE toTo = '$toEmail'");
                         $array = mysqli_fetch_array($select);
 
                         if ($array["FileUpload"] == "") {
-                            $delete = "DELETE FROM $table WHERE id_chat = '$array[id_chat]'";
+                            $delete = "DELETE FROM $table WHERE toTo = '$array[toTo]'";
                             $data = $koneksi->query($delete);
                             if ($data != "") {
                                 if ($data) {
@@ -84,7 +85,7 @@
                             }
                         } else {
                             unlink("../../../../assets/upload/$array[FileUpload]");
-                            $data = $koneksi->query("DELETE FROM $table WHERE id_chat = '$array[id_chat]'");
+                            $data = $koneksi->query("DELETE FROM $table WHERE toTo = '$array[toTo]'");
                             if ($data != "") {
                                 if ($data) {
                                     header("location:../ui/header.php?page=message");
@@ -122,6 +123,9 @@
                 break;
             case 'edit-pesan':
                 require_once("../message/edit.php");
+                break;
+            case 'arsip-pesan':
+                require_once("../message/arsip.php");
                 break;
             case 'logout':
                 if (isset($_SESSION['status'])) {
